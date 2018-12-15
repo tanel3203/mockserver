@@ -2,6 +2,20 @@
 
 A simple mockserver implementation in Dart using Aqueduct, Postgres, Docker
 
+## overview
+
+_Purpose:_ request an external service `https://www.externalservice.com/` from own development application with a relative path `hello/world/15`, but don't spend money in development environment on requesting external services, just need to request mocked data.
+
+_Necessity:_ Resolve some relative endpoint `hello/world/15` to a local server and add these on the go. This implementation: resolves to `http://localhost:9999/mock?name=`+`hello/world/15` instead of `https://www.externalservice.com/`+`hello/world/15`
+
+_Solution:_ clone this repo, ensure you have a running postgres instance, run mockserver, replace the external service with mockserver in env, e.g.`http://localhost:9999/mock?name=` and send in the current POST. 
+
+_Expected:_ When requesting `<env.var>/hello/world/15` will then return the json content of the response field from the mockserver instead of the external service. 
+
+_Note:_ postgres is set up to connect to localhost using `host.docker.internal` which only works on mac. Replace with another postgres docker container or a postgres host running on a server or  google for alternative solutions.
+
+
+
 ## run
 
 To start server
@@ -31,16 +45,5 @@ To start server
 
 
 **get mocked endpoints**
-* GET localhost:9999/mock?name=<name of endpoint>
-
-
-
-
-Necessity: request an external service `https://www.google.com/` from application A with a relative path `/hello/world/15`
-
-Solution: clone this repo, ensure you have a running postgres instance, replace the external service with mockserver in env, e.g.`http://localhost:9999/mock?name=` and send in the current POST. 
-
-Expected: When requesting `<env.var>/hello/world/15` will then return the json content of the response field.
-
-Note: postgres is set up to connect to localhost using `host.docker.internal` which only works on mac. Replace with another postgres docker container or a postgres host running on a server or  google for alternative solutions.
+* GET localhost:9999/mock?name=`hello/world/15`
 

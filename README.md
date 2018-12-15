@@ -33,6 +33,7 @@ To start server
 **add new endpoints**
 * POST localhost:9999/mock
 
+request body:
 ```
 {
 	"name": "hello/world/15",
@@ -47,3 +48,10 @@ To start server
 **get mocked endpoints**
 * GET localhost:9999/mock?name=`hello/world/15`
 
+response body:
+```
+{
+    "helloWorldKey": "15",
+    "helloWorldValue": "fifteen"
+}
+```

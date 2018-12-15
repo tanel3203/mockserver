@@ -20,30 +20,17 @@ class SingleEndpointController extends ResourceController {
     return Response.ok(insertedMock);
   }
 
-  @Operation.get('name')
-  Future<Response> getByName(@Bind.path('name') String name) async {
-    final q = Query<SingleEndpoint>(context)
-      ..where((h) => h.name).equalTo(name);
-
-    final one = await q.fetchOne();
-
-    if (one == null) {
-      return Response.notFound();
-    }
-    return Response.ok(one);
-  }
-
   @Operation.get()
   Future<Response> getAll({@Bind.query('name') String name}) async {
     final q = Query<SingleEndpoint>(context);
     if (name != null) {
       q.where((h) => h.name).contains(name, caseSensitive: false);
     }
-    final heroes = await q.fetch();
+    final result = await q.fetch();
 
-    final getOnlyTheFirst = heroes.map((it) => it.response).first.replaceAll("'", "\"");
+    final firstResponse = result.map((it) => it.response).first.replaceAll("'", "\"");
 
-    return Response.ok(json.decode(getOnlyTheFirst));
+    return Response.ok(json.decode(firstResponse));
   }
 
 }

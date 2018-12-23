@@ -12,7 +12,7 @@ _Solution:_ clone this repo, ensure you have a running postgres instance, run mo
 
 _Expected:_ When requesting `<env.var>/hello/world/15` will then return the json content of the response field from the mockserver instead of the external service. 
 
-_Note:_ postgres is set up to connect to localhost using `host.docker.internal` which only works on mac. Replace with another postgres docker container or a postgres host running on a server or  google for alternative solutions.
+_Note:_ postgres is set up to connect to localhost using `host.docker.internal` (change this to `localhost` when running without docker locally) which only works on mac. Replace with another postgres docker container or a postgres host running on a server or  google for alternative solutions. 
 
 
 

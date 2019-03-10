@@ -17,13 +17,13 @@ _Expected:_ When requesting `<env.var>/hello/world/15` will then return the json
 
 * _STEP 1:_ commands to execute in `psql` to create the necessary credentials:
 ```
-> create database mockserver1;
-> create user mockuser1 with createdb;
-> alter user mockuser1 with password 'mockpass1';
-> grant all on database mockserver1 to mockuser1;
+> create database mockserver2;
+> create user mockuser2 with createdb;
+> alter user mockuser2 with password 'mockpass2';
+> grant all on database mockserver2 to mockuser2;
 ```
 
-* _STEP 2:_ after the psql part is done, execute `aqueduct db upgrade --connect postgres://mockuser1:mockpass1@localhost:5432/mockserver1` to apply the migration in the initial migration file (not in `psql` mode, use `\q` to get out)
+* _STEP 2:_ after the psql part is done, execute `aqueduct db upgrade --connect postgres://mockuser2:mockpass2@localhost:5432/mockserver2` to apply the migration in the initial migration file (not in `psql` mode, use `\q` to get out)
 
 * _STEP 3:_ go to channel.dart and change the postgres connection info (user, pass, db name) to match what you have created for your running postgres db (if you used what I provided here, this is unnecessary).
 

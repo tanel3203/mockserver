@@ -20,7 +20,7 @@ class MockserverChannel extends ApplicationChannel {
 
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
     final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo(
-        "mockuser", "th1sonep4ss", "host.docker.internal", 5432, "mock_server");
+        "mockuser1", "mockpass1", "host.docker.internal", 5432, "mockserver1");
 
     context = ManagedContext(dataModel, persistentStore);
   }

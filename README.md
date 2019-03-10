@@ -12,12 +12,24 @@ _Solution:_ clone this repo, ensure you have a running postgres instance, run mo
 
 _Expected:_ When requesting `<env.var>/hello/world/15` will then return the json content of the response field from the mockserver instead of the external service. 
 
-_Note1:_ postgres is set up to connect to localhost using `host.docker.internal` (change this to `localhost` when running without docker locally) which only works on mac. Replace with another postgres docker container or a postgres host running on a server or  google for alternative solutions. 
 
+## dealing with postgres
 
-_Note2:_  go to channel.dart and change the postgres connection info (user, pass, db name) to match what you have created for your locally running postgres db.
+* _STEP 1:_ commands to execute in `psql` to create the necessary credentials:
+```
+> create database mockserver1;
+> create user mockuser1 with createdb;
+> alter user mockuser1 with password 'mockpass1';
+> grant all on database mockserver1 to mockuser1;
+```
 
+* _STEP 2:_ after the psql part is done, execute `aqueduct db upgrade --connect postgres://mockuser1:mockpass1@localhost:5432/mockserver1` to apply the migration in the initial migration file (not in `psql` mode, use `\q` to get out)
 
+* _STEP 3:_ go to channel.dart and change the postgres connection info (user, pass, db name) to match what you have created for your running postgres db (if you used what I provided here, this is unnecessary).
+
+* _Note:_ postgres is set up to connect to localhost using `host.docker.internal` (change this to `localhost` when running without docker locally) which only works on mac. Replace with another postgres docker container or a postgres host running on a server or  google for alternative solutions. 
+
+* _Note:_ if you want to create more migration files, use `aqueduct db generate`
 ## run
 
 To start server
